@@ -171,6 +171,7 @@
       <DependentUpon>ContosoUniversity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseEdit.cs" />
+    <Compile Include="Models\CoursesCreateOrEdit.cs" />
     <Compile Include="Models\CoursesReport1VM.cs" />
     <Compile Include="Models\Department.cs">
       <DependentUpon>ContosoUniversity.tt</DependentUpon>

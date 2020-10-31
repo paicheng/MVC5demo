@@ -49,11 +49,14 @@ namespace MVC5Demo.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Course course)
+        public ActionResult Create(CoursesCreateOrEdit course)
         {
             if (ModelState.IsValid)
             {
-                db.Course.Add(course);
+                Course c = db.Course.Create();
+                c.InjectFrom(course);
+
+                db.Course.Add(c);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -83,18 +86,17 @@ namespace MVC5Demo.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, CourseEdit course)
+        public ActionResult Edit(CoursesCreateOrEdit course)
         {
             if (ModelState.IsValid)
             {
-                var item = db.Course.Find(id);
+                Course item = db.Course.Find(course.CourseID);
                 item.InjectFrom(course);
 
-                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            Course c = db.Course.Find(id);
+            Course c = db.Course.Find(course.CourseID);
             ViewBag.DepartmentID = new SelectList(db.Department, "DepartmentID", "Name", c.DepartmentID);
             return View(c);
         }
